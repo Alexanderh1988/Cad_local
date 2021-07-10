@@ -1,6 +1,7 @@
 <?php
 //servidor
-require_once $_SERVER['DOCUMENT_ROOT'] . '/core/init.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/Cad_local/core/init.php';
+//require_once $_SERVER['DOCUMENT_ROOT'] . '/core/init.php';
 
 $factor = 86400;
 ?>
@@ -10,23 +11,30 @@ $factor = 86400;
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
-    <script src="http://code.jquery.com/jquery-2.1.3.js"></script>
 
-    <!-- no funciona post con el siguiente codigo -->
-    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstraptrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+    <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
+
+    <!--no funciona post con el siguiente codigo-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="style    sheet" href="/resources/demos/style.css">
+    <!--<link rel="style    sheet" href="/resources/demos/style.css">-->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="css.css">
-    <script type='text/javascript' src="scripts.js">
 
-    </script>
+    <!--<link rel="stylesheet" href="css.css">
+    <script src="myscripts.js"></script>-->
+
+    <link rel="stylesheet" href="css.css">
+    <script src="myscripts.js"></script>
+
+
 
 </head>
 
@@ -82,7 +90,7 @@ if ($_GET) {
     while ($row = mysqli_fetch_array($result)) {
         //hecho "Nombre tabla:" . $row['partid'];
 
-        $partid = (int)$row['partid']+1;
+        $partid = (int)$row['partid'] + 1;
 
     }
 }
@@ -192,14 +200,14 @@ if ($_GET) {
                         <td><?= $descriptor; ?></td>
                         <td><?= $oem; ?></td>
                         <td><?= $extra; ?>
-                            <a style="display: none;" data-ajax="false" href="index.php?delete&id=<?= $id; ?>"
-                               class="eliminar">
-                                <span class="glyphicon glyphicon-trash pull-right"></span>
+                            <!-- <a style="display: none;" data-ajax="false" href="index.php?delete&id=<?= $id; ?>"
+        class="eliminar">
+        <span class="glyphicon glyphicon-trash pull-right"></span>
 
-                                <a style="display: none;" data-ajax="false" href="index.php?editar&id=<?= $id; ?>"
-                                   class="editar">
-                                    <span class="glyphicon glyphicon-pencil pull-right"></span>
-                                </a>
+        <a style="display: none;" data-ajax="false" href="index.php?editar&id=<?= $id; ?>"
+        class="editar">
+        <span class="glyphicon glyphicon-pencil pull-right"></span>
+        </a> -->
                         </td>
 
                         <td><?= $proyecto; ?></td>
@@ -282,12 +290,14 @@ if ($_GET) {
                 <a data-ajax="false" href="index.php?add=<?= $numero; ?>" data-role="button" data-inline="true">Agregar
                     item</a>
 
-                <!--   <a data-theme="e" rel="external" href="index.php" data-role="button" data-inline="true" data-theme="b">Actualizar</a> -->
+                <!--   <a data-theme="e" rel="external" href="index.php" data-role="button" data-inline="true"
+                          data-theme="b">Actualizar</a> -->
 
                 <a data-theme="d" rel="external" onclick="editar();" data-role="button" data-inline="true"
                    data-theme="b">Editar</a>
 
-                <a data-theme="c" rel="external" href="index.php" data-role="button" data-inline="true" data-theme="b">Cancelar</a>
+                <a data-theme="c" rel="external" href="index.php" data-role="button" data-inline="true"
+                   data-theme="b">Cancelar</a>
 
                 <a data-theme="c" rel="external" href="index.php?todo" data-role="button" data-inline="true"
                    data-theme="b">Mostrar todo</a>
@@ -301,10 +311,13 @@ if ($_GET) {
 
         </form>
 
-        <!--  <a data-theme="c" rel="external" onclick="mostrar();" data-role="button" data-inline="true" data-theme="b">Repetir (solo fecha)</a>
-            <input data-inline="true" display="hidden" data-theme="a" type="number" name="num" value="<?= $numero; ?>"> -->
+        <!--  <a data-theme="c" rel="external" onclick="mostrar();" data-role="button" data-inline="true"
+                             data-theme="b">Repetir (solo fecha)</a>
+                    <input data-inline="true" display="hidden" data-theme="a" type="number" name="num"
+                           value="<?= $numero; ?>"> -->
 
-        <a data-theme="c" rel="external" href="historico.php" data-role="button" data-inline="true" data-theme="b"
+        <a data-theme="c" rel="external" href="historico.php" data-role="button" data-inline="true"
+           data-theme="b"
            class="btn btn-secondary pull-right">Ver historial</a>
 
     </div>

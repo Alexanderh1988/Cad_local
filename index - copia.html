@@ -1,0 +1,203 @@
+<head>
+    <title>Recordatorios</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+    <script src="http://code.jquery.com/jquery-2.1.3.js"></script>
+
+    <!-- no funciona post con el siguiente codigo -->
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="css.css">
+
+    <script>
+
+        function mostrar() {
+
+            var x = document.getElementsByClassName("eliminar");
+            var i;
+            for (i = 0; i < x.length; i++) {
+
+                if (x[i].style.display === "none") {
+                    //alert("none");
+                    x[i].style.display = "block";
+                    // document.getElementsByClassName("eliminar").style.display = "none";
+
+                } else {
+                    //else if (x[i].style.display === "hidden") {
+                    // alert("hidden");
+                    x[i].style.display = "none";
+                    // document.getElementsByClassName("eliminar").style.display = "hidden";
+                }
+            }
+
+        }
+
+        function editar() {
+
+            var y = document.getElementsByClassName("editar");
+            var i;
+            for (i = 0; i < y.length; i++) {
+
+                if (y[i].style.display === "none") {
+                    y[i].style.display = "block";
+                } else {
+                    y[i].style.display = "none";
+
+                }
+            }
+        }
+
+        //para cambio de formato:
+        $(function () {
+            $(".datepicker").datepicker({dateFormat: 'yy-mm-dd'});
+        });
+
+        function callme() {
+
+            $(window).load(function () {
+                if (window.location.href.indexOf('reload') == -1) {
+                    window.location.replace(window.location.href + '?reload');
+                }
+            });
+            location.reload();
+        }
+
+
+    </script>
+
+</head>
+
+
+<body>
+
+<div id="login-form" style="width: 95%;">  <!-- 1 -->
+    <h2 class="text-center">&nbsp&nbsp CAD datos   </h2>
+
+    <div data-role="header">
+        <!-- <h1>jQuery Mobile : Reflow</h1> -->
+    </div>
+
+    <div role="main" class="ui-content">   <!-- 2 -->
+
+        <!--  <form action="index.php" method="post">  -->
+
+
+        <table data-role="table" class="ui-responsive table-stroke">
+
+            <!-- Set the Data-role the Table , the reflow is applied by   default-->
+            <thead>
+            <tr>
+                <th>Numero de part</th>
+                <th>Descripcion</th>
+                <th>OEM</th>
+                <th>Extra</th>
+                <th>Proyecto</th>
+                <th>Codigo Proyecto</th>
+                <!-- aca no funciona post -->
+            </tr>
+            </thead>
+            <tbody>
+
+            <!-- //aca no funciona post -->
+
+            <tr>
+
+                <td><?= $asunto; ?></td>
+                <!-- <td><?= $time; ?> </td> -->
+                <td><?= $timet; ?> </td>
+                <td><?= $fecha; ?></td>
+                <td><?= $fechaingreso; ?></td>
+                <td></td>
+                <?= $mensaje; ?>
+
+                <a style="display: none;" data-ajax="false" href="index.php?delete&id=<?= $id; ?>"
+                   class="eliminar"/>
+                <span class="glyphicon glyphicon-trash pull-right"></span>
+
+                <a style="display: none;" data-ajax="false" href="index.php?editar&id=<?= $id; ?>"
+                   class="editar">
+                    <span class="glyphicon glyphicon-pencil pull-right"></span>
+                </a>
+
+                <!--  <form action="index.php" method="post">  -->
+
+            <tr>
+
+                <th><input type="text" name="<?= $i; ?>&asunto"></th>
+                <th><input type="text" name="<?= $i; ?>&asunto"></th>
+                <th><input type="text" name="<?= $i; ?>&asunto"></th>
+                <td><input type="number" name="<?= $i; ?>&tiempo"></td>
+                <td><input class="datepicker" type="text" name="<?= $i; ?>&fecha"></td>
+              <!--  <td><h4> <?= date('Y-m-d'); ?>  </h4></td>-->
+                <td><input type="text" name="<?= $i; ?>&mensaje"></td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+        <div class="ui-field-contain">
+            <hr>
+
+            <button data-theme="c" type="submit" data-inline="true" onclick="callme()">Guardar datos</button>
+
+            <!-- <input data-theme="a" type="hidden" ame="fechaingreso" value="<?= date("d/m/Y"); ?>"> -->
+            <input data-theme="a" type="hidden" name="num" value="<?= $numero; ?>">
+            <!-- <input data-theme="a" type="hidden" name="tiempovar" value="<?= time(); ?>"> -->
+
+            <a data-ajax="false" href="index.php?add=<?= $numero; ?>" data-role="button" data-inline="true">Agregar
+                item</a>
+
+            <!--   <a data-theme="e" rel="external" href="index.php" data-role="button" data-inline="true" data-theme="b">Actualizar</a> -->
+
+            <a data-theme="d" rel="external" onclick="editar();" data-role="button" data-inline="true"
+               data-theme="b">Editar</a>
+
+            <a data-theme="c" rel="external" href="index.php" data-role="button" data-inline="true" data-theme="b">Cancelar</a>
+
+            <a data-theme="c" rel="external" href="index.php?todo" data-role="button" data-inline="true"
+               data-theme="b">Mostrar todo</a>
+
+            <a data-theme="c" rel="external" onclick="mostrar();" data-role="button" data-inline="true"
+               data-theme="b">Eliminar</a>
+
+            <input type="text" data-role="none" placeholder="Buscar" name="busqueda">
+
+            <button data-theme="c" value="submit" type="submit" data-inline="true">Buscar</button>
+
+            <!--  <a data-theme="c" rel="external" onclick="mostrar();" data-role="button" data-inline="true" data-theme="b">Repetir (solo fecha)</a>
+             <input data-inline="true" display="hidden" data-theme="a" type="number" name="num" value="<?= $numero; ?>"> -->
+
+        <a data-theme="c" rel="external" href="historico.php" data-role="button" data-inline="true" data-theme="b"
+           class="btn btn-secondary pull-right">Ver base de datos</a>
+
+    </div>
+
+    <!-- ( Tiempo actual Unix: <?php  echo time();  echo ' - PHP v: ' . phpversion();  ?>) -->
+
+
+</div>          <!-- 1 -->
+</div>    <!-- 2 -->
+
+
+</form>
+
+
+</body>
+
+
+
+    
