@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+<HEAD>
+    <TITLE>My first HTML document</TITLE>
+</HEAD>
+<BODY>
+<P>Hello world!
+</BODY>
+</HTML>
+
+<?php
+for ($x = 0; $x <= 10; $x++) {
+    echo "The number is: $x <br>";
+}
+?>
