@@ -1,4 +1,3 @@
-
 function mostrar() {
 
     //        alert("doacciona");

@@ -1,46 +1,27 @@
 <?php
 //servidor
-//require_once $_SERVER['DOCUMENT_ROOT'].'/Cad_local/core/init.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/core/init.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Cad_local/core/init.php';
+//require_once $_SERVER['DOCUMENT_ROOT'] . '/core/init.php';
+
+session_start();
+
+if (empty($_SESSION["id"])) {
+
+//en el server
+    header('Location: login.php');
+
+}
 
 //$factor = 86400;
-?>
-<head>
-    <title>Base de datos CAD</title>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type='text/javascript' src="https://maxcdn.bootstraptrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
-    <script  src="https://code.jquery.com/jquery-2.1.3.js"></script>
-
-    <!--no funciona post con el siguiente codigo-->
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <script type='text/javascript' src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script>
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <!--<link rel="style    sheet" href="/resources/demos/style.css">-->
-    <script type='text/javascript' src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script type='text/javascript' src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <!--<link rel="stylesheet" href="css.css">
-    <script src="myscripts.js"></script>-->
-
-    <link rel="stylesheet" href="css.css">
-    <script type='text/javascript' src="scripts.js"></script>
-
-</head>
-
-<?php
-
-//$valorPartId = "0";
 
 if ($_POST) {
+
+    if ($_POST['destroysession'])
+    {
+        session_destroy();
+        header("Location: login.php");
+
+    }
 
     $numero = (int)$_POST['num'];
     $i = 0;
@@ -52,10 +33,9 @@ if ($_POST) {
             if ($_POST['' . (string)$i . '&tiempo'] == null) {
                 //  if(!isset($_POST[''.(String)$i.'&tiempo'])) {
                 $tiempo = 0;
+            } else {
+                $tiempo = $_POST['' . (string)$i . '&tiempo'] * $factor + time();
             }
-            //else {
-//                $tiempo = $_POST['' . (string)$i . '&tiempo'] * $factor + time();
-//            }
 
             $partid = $_POST['' . (string)$i . '&partid'];
             $descriptor = $_POST['' . (string)$i . '&descriptor'];
@@ -95,15 +75,20 @@ if ($_POST) {
 
         $db->query($updatesql);
 
-        header("Location: " . $_SERVER['PHP_SELF']);
-
     }
 
 }  //final de POST principal
 
-if (isset($_GET['add'])) {
+if ($_GET) {
 
     $numero = (int)$_GET['add'];
+
+    $delete = $_GET['delete'];
+
+    if(isset($delete)){
+        session_destroy();
+        header("Location: login.php");
+    }
 
     $getPartNumber = "SELECT * FROM `cad_table` ORDER BY ID DESC LIMIT 1";
 
@@ -112,18 +97,51 @@ if (isset($_GET['add'])) {
     while ($row = mysqli_fetch_array($result)) {
         //hecho "Nombre tabla:" . $row['partid'];
 
-        $partId = $row['partid'];
-
-        if (!isset($partId)) $partId = 1;
-
-        $partid = $partId + 1;
+        $partid = (int)$row['partid'] + 1;
 
     }
 }
 
 ?>
+<head>
+    <title>Base de datos CAD</title>
 
-<body>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstraptrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+    <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
+
+    <!--no funciona post con el siguiente codigo-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!--<link rel="style    sheet" href="/resources/demos/style.css">-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!--<link rel="stylesheet" href="css.css">
+    <script src="myscripts.js"></script>-->
+
+    <link rel="stylesheet" href="css.css">
+    <script src="scripts.js"></script>
+
+</head>
+
+
+ <button onclick="location.href = 'index.php?delete=1';" id="myButton"  type="button"
+         class="btn btn-danger pull-right btn-sm" style="width:200px">Cerrar sesion
+ </button>
+
+<!--<form style="width:200px; margin-left: 80%;height: 60px" action="index.php">-->
+<!--    <input name="destroysession" class="btn btn-danger pull-right btn-sm" type="submit" value="Cerrar sesion"/>-->
+<!--</form>-->
 
 <div id="login-form" style="width: 95%;">  <!-- 1 -->
     <h2 class="text-center">&nbsp&nbsp CAD datos
@@ -238,6 +256,7 @@ if (isset($_GET['add'])) {
                             <td><input value="<?= $proyecto; ?>" type="text" name="proyecto"></td>
                             <td><h4> <?= date('Y-m-d'); ?>  </h4></td>
 
+
                         <?php } else {
                             ?>
 
@@ -286,8 +305,6 @@ if (isset($_GET['add'])) {
                         <tr>
                             <th><h4> <?php
 
-                                    if (!isset($partid)) $partid = 0;
-
                                     if (strlen($partid + $i) == 1) {
                                         echo "000-00" . ($partid + $i);
                                     } else if (strlen($partid + $i) == 2) {
@@ -325,7 +342,6 @@ if (isset($_GET['add'])) {
                     <button data-theme="c" type="submit" data-inline="true" href="index.php">  <!--onclick="callme()"-->
                         <?php if (!isset($_GET['editar'])) echo 'Guardar datos'; else echo 'Guardar edicion'; ?>
                     </button>
-
 
                     <input type="hidden" name="operation"
                            value="<?php if (!isset($_GET['editar'])) echo 'grabar'; else echo 'editar'; ?>">
@@ -372,7 +388,7 @@ if (isset($_GET['add'])) {
     </div>
 
 </div>          <!-- 1 -->
-  <!-- 2 -->
+</div>    <!-- 2 -->
 
 </form>
 
