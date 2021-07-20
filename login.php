@@ -11,40 +11,42 @@ $_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
 //$_SESSION["id"] = 6;
 //echo $_SESSION['id'];
 
-if (!empty($_SESSION["id"])) {
+$id = isset($_SESSION["id"]) ? $_SESSION["id"] : null;
 
+if (!empty($id)) {
+//if (is_null($_SESSION["id"])) {
 //en el server
     header('Location: index.php');
+    //header('Location: https://hstech.cl/Cad_local/index.php');
 }
 
- if ($_POST) {
+if ($_POST) {
+
+    //echo 'post';
 
     $getUsers = "SELECT * FROM `users` where full_name='" . $_POST['username'] . "'";
     $results = $db->query($getUsers);
     $row = $results->fetch_array(MYSQLI_NUM);
 
-    $id = reset($row);
-    // var_dump($id);
-
     if (isset($row)) {
 
-        $array = array_reverse($row);
-        $clave = reset($array);
+        $clave = implode("", array_slice($row, 3, 1));
+        $id = implode("", array_slice($row, 0, 1));
 
-        //   var_dump($clave);
-        // echo 'clave es: ' . $clave;
-        // var_dump($_POST['pass']);
-        // var_dump($clave);
-        //  var_dump($_POST['pass'] == $clave);
+
+       // var_dump($_POST['pass']);
+      //  var_dump($clave);
 
         if ($_POST['pass'] == $clave) {
 
-            //  var_dump($_SESSION["id"]);
+           echo 'conditional: ' . ($_POST['pass'] == $clave);
+
             $_SESSION["id"] = $id;
             // var_dump($_SESSION["id"]);
-            //  header("location: https://hstech.cl/Cad_local/", true, 301);
+          //     header("location: https://hstech.cl/Cad_local/", true, 301);
             //header("Location: index.php", true, 301);
             header('Location: index.php');
+            //header('Location: https://hstech.cl/Cad_local/index.php');
             //exit();
 
         }
