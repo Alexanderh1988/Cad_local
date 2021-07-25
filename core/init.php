@@ -2,11 +2,6 @@
 
 //en hstech:
 
-//$db = mysqli_connect('localhost','chs44206_hstech','k5m5[1vP^~ZD','chs44206_dbhstech');
-
-
-//$db = mysqli_connect('localhost','chs44206_hstech','k5m5[1vP^~ZD','chs44206_dbhstech');
-
 //local:
  $db = mysqli_connect('127.0.0.1', 'root', '', 'cad_database');
 
