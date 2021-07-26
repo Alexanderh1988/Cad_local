@@ -9,9 +9,22 @@ $_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
 
 $id = isset($_SESSION["id"]) ? $_SESSION["id"] : null;
 
+ 
 if (!empty($id)) {
     header('Location: index.php');
+ }
+
+$id = isset($_SESSION["id"])?$_SESSION["id"]:null;
+
+if (!empty($id)) {
+
+//if (is_null($_SESSION["id"])) {
+
+//en el server
+    header('Location: index.php');
+ //   header('Location: https://hstech.cl/Cad_local/index.php');
 }
+
 
 if ($_POST) {
 
