@@ -7,22 +7,13 @@ $_SESSION['start'] = time(); // Taking now logged in time.
 // Ending a session in 30 minutes from the starting time.
 $_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
 
-//session_start();
-//$_SESSION["id"] = 6;
-//echo $_SESSION['id'];
-
 $id = isset($_SESSION["id"]) ? $_SESSION["id"] : null;
 
 if (!empty($id)) {
-//if (is_null($_SESSION["id"])) {
-//en el server
     header('Location: index.php');
-    //header('Location: https://hstech.cl/Cad_local/index.php');
 }
 
 if ($_POST) {
-
-    //echo 'post';
 
     $getUsers = "SELECT * FROM `users` where full_name='" . $_POST['username'] . "'";
     $results = $db->query($getUsers);
@@ -33,21 +24,10 @@ if ($_POST) {
         $clave = implode("", array_slice($row, 3, 1));
         $id = implode("", array_slice($row, 0, 1));
 
-
-       // var_dump($_POST['pass']);
-      //  var_dump($clave);
-
         if ($_POST['pass'] == $clave) {
 
-           echo 'conditional: ' . ($_POST['pass'] == $clave);
-
             $_SESSION["id"] = $id;
-            // var_dump($_SESSION["id"]);
-          //     header("location: https://hstech.cl/Cad_local/", true, 301);
-            //header("Location: index.php", true, 301);
             header('Location: index.php');
-            //header('Location: https://hstech.cl/Cad_local/index.php');
-            //exit();
 
         }
     } else {
